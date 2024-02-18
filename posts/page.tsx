@@ -2,7 +2,7 @@
 
 import { increment } from "@/lib/counterSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { AttachmentType } from "@/models/attachments";
+import { AttachmentType } from "@/types/attachment";
 import { useState } from "react";
 
  export function Comp() {
