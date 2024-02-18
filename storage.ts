@@ -16,13 +16,12 @@ const s3 = new S3Client({
     secretAccessKey: process.env.SECRET_ACCESS_KEY!,
   }
 });
-
-async function generateSignedUrl(key: string) {
+// console.log({s3})
+export async function generateSignedUrl(key: string) {
   return await getSignedUrl(
     s3,
-    new PutObjectCommand({ Bucket: "chat", Key: key })
+    new PutObjectCommand({ Bucket: "aztro", Key: key }, {
+      expiresIn: 60*60*24,
+    })
   );
 }
-
-module.exports = { generateSignedUrl };
-
