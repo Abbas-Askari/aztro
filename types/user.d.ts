@@ -6,6 +6,8 @@ export type UserType = {
   name: string,
   email: string,
   password: string,
+  bio: string,
   avatarLink?: HttpsUrl,
+  bannerLink?: HttpsUrl,
   friends: UserType[]
 }
