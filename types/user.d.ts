@@ -1,3 +1,4 @@
+import mongoose from "mongoose"
 import { HttpsUrl } from "./url"
 
 export type UserType = {
@@ -5,6 +6,6 @@ export type UserType = {
   name: string,
   email: string,
   password: string,
-  avatarLink: HttpsUrl,
+  avatarLink?: HttpsUrl,
   friends: UserType[]
 }
