@@ -1,5 +1,5 @@
 import { Comp } from "@/posts/page";
-import { AttachmentType } from "@/models/attachments";
+import { AttachmentType } from "@/types/attachment";
 
 export default async function Home() {
   const { attachments }: { attachments: AttachmentType[] } = await (await fetch("http://localhost:3000/api/attachment")).json();

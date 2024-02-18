@@ -7,13 +7,5 @@ const AttachmentSchema = new mongoose.Schema({
   url: {type: String, required: true}
 });
 
-export type AttachmentType = {
-  name: string,
-  type: string,
-  size: number,
-  url: string
-}
-
-
 const Attachment = mongoose.models.Attachment || mongoose.model("Attachment", AttachmentSchema);
 export default Attachment;
