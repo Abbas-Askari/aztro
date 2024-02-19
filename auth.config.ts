@@ -1,6 +1,4 @@
-import next from "next";
 import { NextAuthConfig } from "next-auth";
-import { UserType } from "./types/user";
 
 export const authConfig = {
   pages: {

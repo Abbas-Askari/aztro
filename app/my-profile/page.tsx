@@ -4,17 +4,23 @@ import SearchBar from './search'
 import NewPostsButton from './new-post';
 import Post from './post';
 import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
+import { UserType } from '@/types/user';
 
 async function ProfilePage() {
    const session = await auth();
-  console.log({mySession: session});
+  if (!session || !session.user) {
+    redirect('/login');
+  }
+  const user: UserType = session.user as UserType;
+
   return (
     <div>
       <SearchBar />
       <div className='p-8'>
         <Island className='p-0 relative'>
-          <img className="h-96 object-cover w-full object-center" src='https://images.unsplash.com/photo-1708199370329-4e9c67823075?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' />
-          <Avatar />
+          <img className="h-96 object-cover w-full object-center" src={user.avatarLink} />
+          <Avatar user={user}/>
           <Tabs />
         </Island>
         <div className='mt-4 flex gap-4 text-white'>
@@ -41,8 +47,8 @@ async function ProfilePage() {
                   Write a new Post
                 </h1>
                 <div className='flex gap-4 items-center'>
-                  <img src="https://plus.unsplash.com/premium_photo-1706727288505-674d9c8ce96c?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className='aspect-square w-16 border-base-200 border-4 rounded-full ' />
-                <NewPostsButton />
+                  <img src={user.avatarLink} className='aspect-square w-16 border-base-200 border-4 rounded-full ' />
+                <NewPostsButton user={user}/>
                 </div>
               </div>
               <div className='p-4 pt-0 border-t-[#ffffff80]  flex justify-end gap-2'>
@@ -59,10 +65,10 @@ async function ProfilePage() {
   )
 }
 
-function Avatar({}) {
+function Avatar({user}: {user: UserType}) {
   return (
     <div className='absolute left-8 bottom-6 flex gap-4 items-center'>
-      <img src="https://plus.unsplash.com/premium_photo-1706727288505-674d9c8ce96c?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className='aspect-square w-48 border-base-200 border-4 rounded-full ' />
+      <img src={user.avatarLink} className='aspect-square w-48 border-base-200 border-4 rounded-full ' />
           <div className='text-3xl text-base-200 font-bold'> Taha Shah </div>
     </div>
   )

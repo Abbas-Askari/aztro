@@ -1,12 +1,13 @@
 "use client";
 
+import { UserType } from "@/types/user";
 import React from "react";
 import { useState } from "react";
 
-function Avatar({ }) {
+function Avatar({ user} : {user: UserType}) {
   return (
     <div className=''>
-      <img src="https://plus.unsplash.com/premium_photo-1706727288505-674d9c8ce96c?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className='aspect-square w-16 border-base-200 border-4 rounded-full ' />
+      <img src={user.avatarLink} className='aspect-square w-16 border-base-200 border-4 rounded-full ' />
     </div>
   )
 }
@@ -19,8 +20,19 @@ function Avatar({ }) {
 //   New Post
 // </button>
 
-function NewPostsButton() {
+function NewPostsButton({user} : {user: UserType}) {
   const [images, setImages] = useState<File[]>([]);
+  const [caption, setcaption] = useState("");
+
+
+  async function submit() {
+    const res = await fetch("http://localhost:3000/api/post", {
+      method: "POST",
+      body: JSON.stringify({caption, attachments: []})
+    })
+    const data = await res.json();
+    console.log({data})
+  }
 
   return (
     <>
@@ -40,13 +52,15 @@ function NewPostsButton() {
             </button>
           </form>
           <div className=" flex items-center gap-4 my-4">
-            <Avatar />
+            <Avatar user={user}/>
             <div>Taha Shah</div>
           </div>
           <div className="my-4 max-h-[60vh] overflow-y-auto bg-neutral-300 rounded-lg p-3">
             <textarea
               className="w-full h-max min-h-max bg-inherit text-[#000000b0] resize-none outline-none"
               placeholder="What's on your mind?"
+              onChange={(e) => setcaption(e.target.value)}
+              value={caption}
             >
             </textarea>
 
@@ -82,7 +96,7 @@ function NewPostsButton() {
               className="hidden"
             />
 
-            <button className="flex-1 btn  btn-primary">Post</button>
+            <button onClick={submit} className="flex-1 btn  btn-primary">Post</button>
           </div>
         </div>
       </dialog>
