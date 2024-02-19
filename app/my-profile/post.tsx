@@ -15,7 +15,7 @@ function Island({ children, className }: { className?: string, children: React.R
 }
 
 function Post({ post }: { post: PostType }) {
-  console.log({rendering: post})
+  console.log({ rendering: post })
   if (post) {
     return (
       <Island className="flex flex-col gap-4 p-4 shadow-lg rounded-lg">
@@ -33,20 +33,17 @@ function Post({ post }: { post: PostType }) {
           </div>
         </div>
         <p>{post.caption}</p>
-        <img
-          className="rounded-lg object-contain bg-slate-600 max-h-[500px]"
-          src="https://images.unsplash.com/photo-1703088066010-af61bb552da4?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="Default image"
-        />
+        
         {
-          post.attachments.map(attachment => 
+          post.attachments.map(attachment =>
             <img
               src={attachment.url}
               alt={attachment.name}
-          className="rounded-lg object-contain bg-slate-600 max-h-[500px]"
-              />
+              className="rounded-lg object-contain bg-slate-600 max-h-[500px]"
+            />
           )
         }
+
         <div className=" flex gap-8  justify-evenly font-semibold items-center border-t-[1px] border-b-[1px] border-neutral-700">
           <button className="flex items-center gap-2  hover:bg-[#00000030] px-8 py-2 rounded-xl">
             <HeartIcon className="w-8 h-8" />
