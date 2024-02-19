@@ -1,5 +1,6 @@
 "use client";
 
+import { AttachmentType } from "@/types/attachment";
 import { UserType } from "@/types/user";
 import React from "react";
 import { useState } from "react";
@@ -26,12 +27,29 @@ function NewPostsButton({user} : {user: UserType}) {
 
 
   async function submit() {
+    const attachments: AttachmentType[] = [];
+    for (const image of images) {
+      const res = await fetch("http://localhost:3000/api/attachment", {
+        method: "POST",
+        body: JSON.stringify({ size: image.size, name: image.name, type: image.type })
+      })
+      const { attachment, url } = await res.json();
+      attachments.push(attachment);
+      const resp = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        body: image
+      })
+      console.log(resp);
+    }
     const res = await fetch("http://localhost:3000/api/post", {
       method: "POST",
-      body: JSON.stringify({caption, attachments: []})
+      body: JSON.stringify({ caption, attachments })
     })
     const data = await res.json();
-    console.log({data})
+    console.log({ data })
   }
 
   return (

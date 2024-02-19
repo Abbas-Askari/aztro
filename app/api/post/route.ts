@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 export async function GET(req: NextApiRequest) {
-  const posts = await Post.find({}).populate('user').exec();
+  const posts = await Post.find({}).populate('user attachments').exec();
   return NextResponse.json({
     posts
   })
