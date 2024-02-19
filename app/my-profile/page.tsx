@@ -6,13 +6,16 @@ import Post from './post';
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 import { UserType } from '@/types/user';
+import { PostType } from '@/types/post';
 
 async function ProfilePage() {
-   const session = await auth();
+  const session = await auth();
   if (!session || !session.user) {
     redirect('/login');
   }
   const user: UserType = session.user as UserType;
+  const { posts } : {posts: PostType[]}= await (await fetch("http://localhost:3000/api/post")).json();
+  console.log({ posts })
 
   return (
     <div>
@@ -20,7 +23,7 @@ async function ProfilePage() {
       <div className='p-8'>
         <Island className='p-0 relative'>
           <img className="h-96 object-cover w-full object-center" src={user.avatarLink} />
-          <Avatar user={user}/>
+          <Avatar user={user} />
           <Tabs />
         </Island>
         <div className='mt-4 flex gap-4 text-white'>
@@ -48,7 +51,7 @@ async function ProfilePage() {
                 </h1>
                 <div className='flex gap-4 items-center'>
                   <img src={user.avatarLink} className='aspect-square w-16 border-base-200 border-4 rounded-full ' />
-                <NewPostsButton user={user}/>
+                  <NewPostsButton user={user} />
                 </div>
               </div>
               <div className='p-4 pt-0 border-t-[#ffffff80]  flex justify-end gap-2'>
@@ -56,7 +59,9 @@ async function ProfilePage() {
                 <button className='btn btn-primary'>Post</button>
               </div>
             </Island>
-            <Post />
+            {posts.map(post =>
+              <Post post={post} />
+            )}
           </div>
 
         </div>

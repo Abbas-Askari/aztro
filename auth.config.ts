@@ -13,7 +13,6 @@ export const authConfig = {
       return isLoggedIn;
     },
     jwt({ token, user, account }) {
-      console.log({token, user, account});
       if (user) {
         token.accessToken = account!.access_token;
         token.id = user.id;
