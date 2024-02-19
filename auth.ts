@@ -14,14 +14,16 @@ export const { auth, signIn, signOut } = NextAuth({
       if (parsedCredentials.success) {
         await connect()
         const { email, password } = parsedCredentials.data;
-        const user: UserType = await User.findOne({ email }).exec();
+        const user: UserType & {toJSON: () => {}} = await User.findOne({ email }).exec();
         console.log({user})
         if (!user) return null;
         if (user.password !== password) return null;
-        return user;
+        console.log("User is: ", user);
+        return user.toJSON();
       }
 
       return null;
     }
+ 
   })]
 });

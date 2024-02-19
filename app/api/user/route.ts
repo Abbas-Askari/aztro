@@ -1,12 +1,14 @@
-import { generateSignedUrl } from '@/storage';
 import connect from '@/db';
 import {  NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import User from '@/models/users';
-import { error } from 'console';
+import { NextApiRequest } from 'next';
+import { auth } from '@/auth';
 
-export async function GET() {
-  connect();
+export async function GET(req: NextApiRequest) {
+await   connect();
+  const session = await auth()
+  console.log({session});
   const users = await User.find({}).exec();
   return NextResponse.json({
     users,

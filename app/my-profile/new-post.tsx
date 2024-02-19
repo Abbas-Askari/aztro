@@ -24,6 +24,10 @@ function NewPostsButton() {
 
   return (
     <>
+      <input onClick={() => {
+        const modal = document.getElementById('post_modal') as HTMLDialogElement;
+        modal.showModal();
+      }} className='input input-bordered rounded-full flex-1 input-md placeholder:opacity-50' placeholder='Write a new post' />
       <dialog id="post_modal" className="modal ">
         <div className="modal-box ">
           <div className=" font-bold text-lg pb-1 border-b-2 border-neutral-300 text-center">
